@@ -73,16 +73,41 @@ function App() {
 
       <h2>Saved Topics</h2>
 
-      {topics.map((item, index) => (
-        <div key={index}>
-          <p>
-            <strong>{item.topic}</strong>
-          </p>
-          <p>Date: {item.date}</p>
-          <p>Confidence: {item.confidence}</p>
-          <hr />
-        </div>
-      ))}
+     {topics.map((item, index) => {
+  const retention = item.confidence * 10;
+
+  let status = "";
+
+  if (retention >= 70) {
+    status = "Strong Memory";
+  } else if (retention >= 40) {
+    status = "Moderate Risk";
+  } else {
+    status = "Needs Revision";
+  }
+
+  return (
+    <div
+      key={index}
+      style={{
+        border: "1px solid gray",
+        padding: "15px",
+        marginBottom: "10px",
+        borderRadius: "10px",
+      }}
+    >
+      <h3>{item.topic}</h3>
+
+      <p>Date Learned: {item.date}</p>
+
+      <p>Confidence: {item.confidence}/10</p>
+
+      <p>Retention Score: {retention}%</p>
+
+      <p>Status: {status}</p>
+    </div>
+  );
+})}
     </div>
   );
 }
