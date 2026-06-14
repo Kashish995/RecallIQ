@@ -45,11 +45,17 @@ cp .env.example .env
 Open `.env` and fill in:
 
 ```
-DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/recalliq"
-JWT_SECRET="any-long-random-string-here"
-OPENAI_API_KEY="sk-..."   # optional — app works without it
+DATABASE_URL="mysql://root:recalliq123@localhost:3306/recalliq"
+
+JWT_SECRET="recalliq123secret"
+
+JWT_EXPIRES_IN="7d"
+
 CLIENT_URL="http://localhost:3000"
+
 PORT=5000
+
+NODE_ENV=development
 ```
 
 ### Step 4 — Push database schema
