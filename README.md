@@ -13,36 +13,35 @@ RecallIQ/
 
 ---
 
-## SETUP IN 5 STEPS
+## Setup & Run
 
-### Step 1 — Install dependencies
-
-```bash
-# Backend
-cd server
-npm install
-
-# Frontend
-cd ../client
-npm install
-```
-
-### Step 2 — Setup PostgreSQL
-
-Make sure PostgreSQL is running. Then create a database:
-
+### Step 1 — Database
+Open MySQL Workbench and run:
 ```sql
 CREATE DATABASE recalliq;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'recalliq123';
+FLUSH PRIVILEGES;
 ```
 
-### Step 3 — Create environment file
-
-```bash
+### Step 2 — Backend
+```powershell
 cd server
-cp .env.example .env
+npm install
+npx prisma generate
+npx prisma db push
+npm run dev
 ```
+Server runs on http://localhost:5000
 
-Open `.env` and fill in:
+### Step 3 — Frontend
+```powershell
+cd client
+npm install
+npm run dev
+```
+App runs on http://localhost:3000
+
+### .env file (server/.env)
 
 ```
 DATABASE_URL="mysql://root:recalliq123@localhost:3306/recalliq"
