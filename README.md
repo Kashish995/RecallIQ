@@ -4,9 +4,11 @@ AI-powered memory tracking using the Ebbinghaus Forgetting Curve.
 
 ## Folder Structure
 ```
-recalliq-fullstack/
-├── client/        ← Next.js 14 frontend
-└── server/        ← Node.js + Express backend
+RecallIQ/
+
+├── client/     ← Frontend (Next.js)
+
+└── server/     ← Backend (Node.js + Express)
 ```
 
 ---
