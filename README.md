@@ -87,29 +87,37 @@ Open http://localhost:3000 — done!
 
 ---
 
-## Deploy to Production
+## Deploy
 
 ### Frontend → Vercel
 ```bash
 cd client
 npx vercel
 ```
-Set env variable in Vercel dashboard:
-```
-NEXT_PUBLIC_API_URL = https://your-backend.railway.app
-```
 
 ### Backend → Railway
-1. Go to railway.app → New Project → Deploy from GitHub
-2. Select the `/server` folder
-3. Add environment variables (same as .env)
-4. Railway gives you a URL like `https://recalliq-server.railway.app`
+1. Push code to GitHub
+2. Go to railway.app
+3. New Project → Deploy from GitHub → select server folder
+4. Add environment variables
 
-### Database → Neon (free PostgreSQL)
-1. Go to neon.tech → Create project
-2. Copy the connection string
-3. Paste into DATABASE_URL in Railway env vars
-4. Run: `npm run db:push`
+### Database → Railway MySQL
+Add MySQL plugin in Railway and update DATABASE_URL
+
+## Pages
+- / → Landing page
+- /login → Login
+- /register → Register
+- /dashboard → Main dashboard with forgetting curve
+- /dashboard/upload → Upload PDFs, URLs, add concepts
+- /dashboard/graph → Knowledge graph
+- /dashboard/quiz → AI quiz center
+- /dashboard/revision → Revision queue
+- /dashboard/concepts → All concepts
+- /dashboard/analytics → Charts and analytics
+- /dashboard/search → Semantic search
+- /dashboard/settings → Profile settings
+'@
 
 ---
 
