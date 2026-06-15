@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -61,7 +61,7 @@ model Material {
 model QuizItem {
   id         String   @id @default(cuid())
   question   String
-  options    String[]
+  options    Json
   answer     Int
   difficulty String   @default("medium")
   createdAt  DateTime @default(now())
