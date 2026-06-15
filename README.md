@@ -4,50 +4,57 @@ AI-powered memory tracking using the Ebbinghaus Forgetting Curve.
 
 ## Folder Structure
 ```
-recalliq-fullstack/
-├── client/        ← Next.js 14 frontend
-└── server/        ← Node.js + Express backend
+RecallIQ/
+
+├── client/     ← Frontend (Next.js)
+
+└── server/     ← Backend (Node.js + Express)
 ```
 
 ---
 
-## SETUP IN 5 STEPS
+## Setup & Run
 
-### Step 1 — Install dependencies
-
-```bash
-# Backend
-cd server
-npm install
-
-# Frontend
-cd ../client
-npm install
-```
-
-### Step 2 — Setup PostgreSQL
-
-Make sure PostgreSQL is running. Then create a database:
-
+### Step 1 — Database
+Open MySQL Workbench and run:
 ```sql
 CREATE DATABASE recalliq;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'recalliq123';
+FLUSH PRIVILEGES;
 ```
 
-### Step 3 — Create environment file
-
-```bash
+### Step 2 — Backend
+```powershell
 cd server
-cp .env.example .env
+npm install
+npx prisma generate
+npx prisma db push
+npm run dev
 ```
+Server runs on http://localhost:5000
 
-Open `.env` and fill in:
+### Step 3 — Frontend
+```powershell
+cd client
+npm install
+npm run dev
+```
+App runs on http://localhost:3000
+
+### .env file (server/.env)
 
 ```
-DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/recalliq"
-JWT_SECRET="any-long-random-string-here"
-OPENAI_API_KEY="sk-..."   # optional — app works without it
+DATABASE_URL="mysql://root:recalliq123@localhost:3306/recalliq"
+
+JWT_SECRET="recalliq123secret"
+
+JWT_EXPIRES_IN="7d"
+
 CLIENT_URL="http://localhost:3000"
+
 PORT=5000
+
+NODE_ENV=development
 ```
 
 ### Step 4 — Push database schema
@@ -80,35 +87,43 @@ Open http://localhost:3000 — done!
 
 ---
 
-## Deploy to Production
+## Deploy
 
 ### Frontend → Vercel
 ```bash
 cd client
 npx vercel
 ```
-Set env variable in Vercel dashboard:
-```
-NEXT_PUBLIC_API_URL = https://your-backend.railway.app
-```
 
 ### Backend → Railway
-1. Go to railway.app → New Project → Deploy from GitHub
-2. Select the `/server` folder
-3. Add environment variables (same as .env)
-4. Railway gives you a URL like `https://recalliq-server.railway.app`
+1. Push code to GitHub
+2. Go to railway.app
+3. New Project → Deploy from GitHub → select server folder
+4. Add environment variables
 
-### Database → Neon (free PostgreSQL)
-1. Go to neon.tech → Create project
-2. Copy the connection string
-3. Paste into DATABASE_URL in Railway env vars
-4. Run: `npm run db:push`
+### Database → Railway MySQL
+Add MySQL plugin in Railway and update DATABASE_URL
+
+## Pages
+- / → Landing page
+- /login → Login
+- /register → Register
+- /dashboard → Main dashboard with forgetting curve
+- /dashboard/upload → Upload PDFs, URLs, add concepts
+- /dashboard/graph → Knowledge graph
+- /dashboard/quiz → AI quiz center
+- /dashboard/revision → Revision queue
+- /dashboard/concepts → All concepts
+- /dashboard/analytics → Charts and analytics
+- /dashboard/search → Semantic search
+- /dashboard/settings → Profile settings
+'@
 
 ---
 
 ## Tech Stack
 - **Frontend**: Next.js 14, React, Tailwind CSS, Recharts
 - **Backend**: Node.js, Express, Prisma ORM
-- **Database**: PostgreSQL
+- **Database**: MySQL
 - **Auth**: JWT + HTTP-only cookies
 - **AI**: OpenAI GPT-3.5 (optional)
