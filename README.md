@@ -126,4 +126,4 @@ Add MySQL plugin in Railway and update DATABASE_URL
 - **Backend**: Node.js, Express, Prisma ORM
 - **Database**: MySQL
 - **Auth**: JWT + HTTP-only cookies
-- 
+- **AI**: OpenAI GPT-3.5 (optional)
