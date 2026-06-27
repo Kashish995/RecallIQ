@@ -11,7 +11,6 @@ RecallIQ/
 └── server/     ← Backend (Node.js + Express)
 ```
 
----
 
 ## Setup & Run
 
