@@ -5,15 +5,15 @@ import { usePathname } from "next/navigation";
 import api from "@/lib/api";
 
 const NAV = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/dashboard/upload", label: "Upload" },
-  { href: "/dashboard/graph", label: "Knowledge Graph" },
-  { href: "/dashboard/quiz", label: "Quiz Center" },
-  { href: "/dashboard/revision", label: "Revision Queue" },
-  { href: "/dashboard/concepts", label: "All Concepts" },
-  { href: "/dashboard/analytics", label: "Analytics" },
-  { href: "/dashboard/search", label: "Search" },
-  { href: "/dashboard/settings", label: "Settings" },
+  { href: "/dashboard", label: "Dashboard", icon: "ti-layout-dashboard" },
+  { href: "/dashboard/upload", label: "Upload", icon: "ti-upload" },
+  { href: "/dashboard/graph", label: "Knowledge graph", icon: "ti-sitemap" },
+  { href: "/dashboard/quiz", label: "Quiz center", icon: "ti-brain" },
+  { href: "/dashboard/revision", label: "Revision queue", icon: "ti-refresh" },
+  { href: "/dashboard/concepts", label: "All concepts", icon: "ti-list" },
+  { href: "/dashboard/analytics", label: "Analytics", icon: "ti-chart-bar" },
+  { href: "/dashboard/search", label: "Search", icon: "ti-search" },
+  { href: "/dashboard/settings", label: "Settings", icon: "ti-settings" },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -32,41 +32,42 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pageTitle = NAV.find(n => n.href === path)?.label || "Dashboard";
 
   const SidebarContent = () => (
-    <aside style={{ width: 240, background: "#FFFFFF", borderRight: "1px solid #EDEDED", display: "flex", flexDirection: "column", height: "100vh", position: "sticky", top: 0 }}>
-      <div style={{ padding: "28px 24px 16px" }}>
-        <div style={{ fontFamily: "Syne,sans-serif", fontSize: 20, fontWeight: 800, color: "#0A0A0A", letterSpacing: -0.5 }}>RecallIQ</div>
+    <aside style={{ width: 252, background: "#FFFFFF", borderRadius: 24, padding: "20px 16px", display: "flex", flexDirection: "column", height: "calc(100vh - 32px)", margin: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "0 8px", marginBottom: 28 }}>
+        <div style={{ width: 34, height: 34, borderRadius: 10, background: "linear-gradient(135deg,#7C3AED,#EC4899)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontFamily: "Outfit,sans-serif", fontWeight: 800, fontSize: 15 }}>R</div>
+        <span style={{ fontFamily: "Outfit,sans-serif", fontWeight: 800, fontSize: 17, color: "#1A1A2E" }}>RecallIQ</span>
       </div>
-      <nav style={{ flex: 1, padding: "8px 14px", overflowY: "auto" }}>
-        {NAV.map(({ href, label }) => {
+      <nav style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, overflowY: "auto" }}>
+        {NAV.map(({ href, label, icon }) => {
           const active = path === href;
           return (
             <Link key={href} href={href} onClick={() => setOpen(false)} style={{
-              display: "block", padding: "11px 14px", borderRadius: 10, fontSize: 13.5, fontWeight: active ? 700 : 500,
-              color: active ? "#FFFFFF" : "#6B6B6B", background: active ? "#0A0A0A" : "transparent",
-              marginBottom: 3, textDecoration: "none", transition: "all .15s"
+              display: "flex", alignItems: "center", gap: 11, padding: "11px 14px", borderRadius: 13,
+              fontSize: 13.5, fontWeight: active ? 700 : 500,
+              color: active ? "#fff" : "#6B6B80",
+              background: active ? "linear-gradient(135deg,#7C3AED,#5B21B6)" : "transparent",
+              textDecoration: "none", transition: "all .15s"
             }}>
-              {label}
+              <i className={"ti " + icon} style={{ fontSize: 18 }} />{label}
             </Link>
           );
         })}
-        <button onClick={logout} style={{ display: "block", width: "100%", textAlign: "left", padding: "11px 14px", borderRadius: 10, fontSize: 13.5, fontWeight: 500, color: "#6B6B6B", background: "transparent", border: "none", cursor: "pointer", marginTop: 10, fontFamily: "DM Sans,sans-serif" }}>
-            Logout
+        <button onClick={logout} style={{ display: "flex", alignItems: "center", gap: 11, padding: "11px 14px", borderRadius: 13, fontSize: 13.5, fontWeight: 500, color: "#6B6B80", background: "transparent", border: "none", cursor: "pointer", marginTop: 6, fontFamily: "DM Sans,sans-serif", textAlign: "left" }}>
+          <i className="ti ti-logout" style={{ fontSize: 18 }} />Logout
         </button>
       </nav>
-      <div style={{ padding: 18, borderTop: "1px solid #EDEDED" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ width: 34, height: 34, borderRadius: "50%", background: "#0A0A0A", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Syne,sans-serif", fontWeight: 700, fontSize: 13, color: "#fff" }}>{initial}</div>
-          <div>
-            <div style={{ fontSize: 13, fontWeight: 600, color: "#0A0A0A" }}>{user?.name || "User"}</div>
-            <div style={{ fontSize: 11, color: "#9A9A9A" }}>Free Plan</div>
-          </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 10px", borderRadius: 14, background: "#F8F7FC" }}>
+        <div style={{ width: 32, height: 32, borderRadius: "50%", background: "linear-gradient(135deg,#FBBF24,#F472B6)", flexShrink: 0 }} />
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "#1A1A2E" }}>{user?.name || "User"}</div>
+          <div style={{ fontSize: 11, color: "#9A9AA8" }}>Free plan</div>
         </div>
       </div>
     </aside>
   );
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#FAFAFA" }}>
+    <div style={{ display: "flex", minHeight: "100vh", background: "#F4F2FC" }}>
       <div style={{ display: "none" }} className="desktop-sb"><SidebarContent /></div>
       {open && (
         <div style={{ position: "fixed", inset: 0, zIndex: 50, display: "flex" }}>
@@ -74,17 +75,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div style={{ position: "relative", zIndex: 1 }}><SidebarContent /></div>
         </div>
       )}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
-        <header style={{ height: 64, background: "#FFFFFF", borderBottom: "1px solid #EDEDED", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 28px", position: "sticky", top: 0, zIndex: 40 }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, padding: "16px 20px 16px 0" }}>
+        <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <button onClick={() => setOpen(true)} style={{ background: "none", border: "none", color: "#0A0A0A", fontSize: 20, cursor: "pointer" }}>&#9776;</button>
-            <span style={{ fontFamily: "Syne,sans-serif", fontSize: 17, fontWeight: 700, color: "#0A0A0A" }}>{pageTitle}</span>
+            <button onClick={() => setOpen(true)} style={{ background: "#fff", border: "none", borderRadius: 12, width: 38, height: 38, color: "#1A1A2E", fontSize: 18, cursor: "pointer" }} className="mobile-only">
+              <i className="ti ti-menu-2" />
+            </button>
+            <span style={{ fontFamily: "Outfit,sans-serif", fontSize: 19, fontWeight: 800, color: "#1A1A2E" }}>{pageTitle}</span>
           </div>
-          <div style={{ width: 34, height: 34, borderRadius: "50%", background: "#0A0A0A", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Syne,sans-serif", fontWeight: 700, fontSize: 13, color: "#fff", cursor: "pointer" }} onClick={() => window.location.href = "/dashboard/settings"}>{initial}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ width: 38, height: 38, borderRadius: "50%", background: "linear-gradient(135deg,#FBBF24,#F472B6)", cursor: "pointer" }} onClick={() => window.location.href = "/dashboard/settings"} />
+          </div>
         </header>
-        <main style={{ flex: 1, padding: 28, maxWidth: 1200, width: "100%", margin: "0 auto" }}>{children}</main>
+        <main style={{ flex: 1 }}>{children}</main>
       </div>
-      <style>{"@media(min-width:1024px){.desktop-sb{display:block !important}}"}</style>
+      <style>{"@media(min-width:1024px){.desktop-sb{display:block !important}.mobile-only{display:none !important}}"}</style>
     </div>
   );
 }
