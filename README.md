@@ -1,4 +1,4 @@
-# RecallIQ —
+# RecallIQ —  Full Stack App
 
 AI-powered memory tracking using the Ebbinghaus Forgetting Curve.
 
